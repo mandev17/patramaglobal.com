@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Suku Cadang & Spare Parts Industri - PT. Patrama Global</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Katalog lengkap suku cadang dan spare parts industri berkualitas. Inverter, PCB, Komponen Elektronik, dan aksesori mesin tersedia. Gratis konsultasi dan WhatsApp 24 jam.">
+    <meta name="keywords" content="suku cadang industri, spare parts, inverter spare, PCB komponen, elektronik industri, part number, katalog parts">
+    <meta name="author" content="PT. Patrama Global Nusantara">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patramaglobal.co.id/shop.html">
+    <meta property="og:title" content="Katalog Suku Cadang Industri">
+    <meta property="og:description" content="Ribuan suku cadang berkualitas untuk kebutuhan industri. Pencarian mudah, harga kompetitif, pengiriman cepat.">
+    <meta property="og:image" content="https://patramaglobal.co.id/assets/images/Logo.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://patramaglobal.co.id/shop.html">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/style.css"> 
+    
+    <style>
+        /* Gunakan variabel warna global dari style.css - override lokal untuk tampilan Tokopedia */
+        body {
+            background-color: var(--bg-body-light);
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        /* Header Judul (Sedikit dirapikan agar tidak terlalu kaku) */
+        .shop-header {
+            background: #fff;
+            padding: 20px 0;
+            margin-top: 76px !important; /* Sesuaikan tinggi navbar */
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+        .shop-header h1 { font-size: 24px; color: var(--dark-text); margin: 0; }
+        .shop-header p { font-size: 14px; color: var(--text-grey, #6D7588); margin: 5px 0 0; }
+
+        /* Layout Sidebar & Content */
+        .filter-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px; /* Agar sticky saat scroll */
+        }
+        
+        .cat-item {
+            padding: 8px 10px;
+            font-size: 14px;
+            color: var(--text-grey, #6D7588);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+        .cat-item:hover { background-color: #f3f4f5; color: var(--primary-green, #03AC0E); }
+        .cat-item.active { background-color: #e5f9e6; color: var(--primary-green, #03AC0E); font-weight: bold; }
+
+        /* Search & Sort Bar */
+        .toolbar-container {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .form-control-tokped {
+            border: 1px solid #bfc9d9;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .form-control-tokped:focus { border-color: var(--primary-green, #03AC0E); box-shadow: none; }
+        .form-select-tokped {
+            border: 1px solid #bfc9d9;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Product Card Style */
+        .card-product {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 100%;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-product:hover {
+            border-color: var(--primary-green, #03AC0E);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .img-wrap {
+            width: 100%;
+            padding-top: 100%; /* Rasio 1:1 */
+            position: relative;
+            background: #fff;
+        }
+        .img-wrap img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: contain; /* Gambar tidak gepeng */
+            padding: 10px;
+        }
+        .card-body-custom {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .prod-title {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--dark-text, #212121);
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Max 2 baris */
+            -webkit-box-orient: vertical;
+        }
+        .prod-pn { font-size: 12px; color: var(--text-grey, #6D7588); margin-bottom: 8px; }
+        .prod-status { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-block; width: fit-content; }
+        .st-ready { background: #d6ffde; color: var(--primary-green, #03AC0E); }
+        .st-inden { background: #d6e9ff; color: #0052cc; }
+        .st-empty { background: #e8e8e8; color: #5a5a5a; }
+
+        .btn-action {
+            margin-top: auto;
+            border: 1px solid var(--primary-green, #03AC0E);
+            color: var(--primary-green, #03AC0E);
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 6px;
+            width: 100%;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-action:hover { background: var(--primary-green, #03AC0E); color: white; }
+
+        /* Loading */
+        #loading { padding: 40px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-white">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/Logo.png" alt="Logo" loading="lazy">
+                <span class="navbar-brand-text">PT. PATRAMA GLOBAL NUSANTARA</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#services">Layanan</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="shop.html">Katalog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#tracking">Cek Servis</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="index.html#contact" class="btn btn-nav-contact">Hubungi Kami</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="shop-header">
+        <div class="container">
+            <h1 class="fw-bold">Katalog Suku Cadang</h1>
+            <p>Sparepart Berkualitas untuk Kebutuhan Industri</p>
+        </div>
+    </div>
+
+    <div class="container my-4">
+        <div class="row">
+            
+            <div class="col-lg-3 mb-4">
+                <div class="filter-card">
+                    <h6 class="fw-bold mb-3"><i class="fas fa-list me-2"></i>Kategori</h6>
+                    <div id="categoryContainer">
+                        <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                
+                <div class="toolbar-container d-flex flex-column flex-md-row gap-3 align-items-center justify-content-between">
+                    <div class="input-group flex-grow-1">
+                        <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                        <input type="text" id="searchInput" class="form-control form-control-tokped border-start-0" placeholder="Cari Nama Barang atau Part Number..." onkeyup="applyAllFilters()">
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-2" style="min-width: 200px;">
+                        <span class="small fw-bold text-muted text-nowrap">Urutkan:</span>
+                        <select id="sortSelect" class="form-select form-select-tokped" onchange="applyAllFilters()">
+                            <option value="default">Terkait</option>
+                            <option value="az">Nama A-Z</option>
+                            <option value="za">Nama Z-A</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="loading">
+                    <div class="spinner-border text-success" role="status"></div>
+                    <p class="mt-2 text-muted">Memuat produk...</p>
+                </div>
+
+                <div class="row g-3" id="productContainer"></div>
+                
+                <div id="noResult" class="text-center mt-5" style="display: none;">
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <p class="text-muted fw-bold">Produk tidak ditemukan</p>
+                    <p class="small text-muted">Coba ubah kata kunci atau filter kategori.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+    <script>
+        const sheetID = '1eMMwcFXIHTP3QS62ViEjKdiSN2fDNtZD3OB4jgiQEO0';
+        let allProducts = [];
+        let activeCategory = 'Semua';
+
+        document.addEventListener('DOMContentLoaded', fetchData);
+
+        function fetchData() {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv`;
+            Papa.parse(url, {
+                download: true, header: true, skipEmptyLines: true,
+                complete: function(results) {
+                    allProducts = results.data;
+                    initCategories(); // Inisialisasi Kategori
+                    applyAllFilters(); // Render awal
+                    document.getElementById('loading').style.display = 'none';
+                },
+                error: function() {
+                    document.getElementById('loading').innerHTML = '<p class="text-danger">Gagal memuat data. Cek koneksi internet.</p>';
+                }
+            });
+        }
+
+        // --- Logika Kategori Otomatis ---
+        function initCategories() {
+            // Ambil semua kategori unik dari data, jika kolom 'Kategori' ada
+            const categories = new Set(['Semua']);
+            allProducts.forEach(item => {
+                // Asumsi nama kolom di sheet adalah "Kategori", jika tidak ada maka masuk ke "Lainnya" atau diabaikan
+                if (item.Kategori) {
+                    categories.add(item.Kategori);
+                }
+            });
+
+            const container = document.getElementById('categoryContainer');
+            container.innerHTML = '';
+
+            categories.forEach(cat => {
+                const div = document.createElement('div');
+                div.className = `cat-item ${cat === 'Semua' ? 'active' : ''}`;
+                div.textContent = cat;
+                div.onclick = () => {
+                    // Update UI Active State
+                    document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
+                    div.classList.add('active');
+                    
+                    // Update Data
+                    activeCategory = cat;
+                    applyAllFilters();
+                };
+                container.appendChild(div);
+            });
+        }
+
+        // --- Logika Filter Utama (Search + Category + Sort) ---
+        function applyAllFilters() {
+            const keyword = document.getElementById('searchInput').value.toLowerCase();
+            const sortVal = document.getElementById('sortSelect').value;
+
+            // 1. Filter Search & Kategori
+            let filtered = allProducts.filter(item => {
+                const matchSearch = (item.Nama_Barang || '').toLowerCase().includes(keyword) || 
+                                    (item.Part_Number || '').toLowerCase().includes(keyword);
+                
+                const matchCat = activeCategory === 'Semua' || (item.Kategori && item.Kategori === activeCategory);
+                
+                return matchSearch && matchCat;
+            });
+
+            // 2. Sorting
+            if (sortVal === 'az') {
+                filtered.sort((a, b) => (a.Nama_Barang || '').localeCompare(b.Nama_Barang || ''));
+            } else if (sortVal === 'za') {
+                filtered.sort((a, b) => (b.Nama_Barang || '').localeCompare(a.Nama_Barang || ''));
+            }
+
+            renderProducts(filtered);
+        }
+
+        function renderProducts(data) {
+            const container = document.getElementById('productContainer');
+            
+            if (data.length === 0) {
+                container.innerHTML = '';
+                document.getElementById('noResult').style.display = 'block';
+                return;
+            }
+            document.getElementById('noResult').style.display = 'none';
+
+            container.innerHTML = data.map(item => {
+                const nama = item.Nama_Barang || 'Tanpa Nama';
+                const part = item.Part_Number || '-';
+                const status = item.Status || 'Ready';
+                const foto = (item.Foto_URL && item.Foto_URL.length > 5) ? item.Foto_URL : 'https://via.placeholder.com/300x300?text=No+Image';
+                
+                // Class warna status
+                let statusClass = 'st-ready';
+                if(status.toLowerCase().includes('inden')) statusClass = 'st-inden';
+                if(status.toLowerCase().includes('kosong')) statusClass = 'st-empty';
+
+                return `
+                <div class="col-6 col-md-4 col-lg-3"> <div class="card-product">
+                        <div class="img-wrap">
+                            <img src="${foto}" alt="${nama}" loading="lazy">
+                        </div>
+                        <div class="card-body-custom">
+                            <h6 class="prod-title" title="${nama}">${nama}</h6>
+                            <div class="prod-pn">PN: ${part}</div>
+                            <div class="mb-2">
+                                <span class="prod-status ${statusClass}">${status}</span>
+                            </div>
+                            <a href="https://wa.me/62895333802106?text=Halo,%20saya%20tertarik%20dengan%20${encodeURIComponent(nama)}%20(PN:${part})" 
+                               class="btn-action">
+                               <i class="fab fa-whatsapp"></i> Tanya Stok
+                            </a>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+    </script>
+
+    <!-- FOOTER SECTION -->
+    <section id="contact" style="padding-bottom: 0;">
+        <footer>
+            <div class="container">
+                <div class="row g-4 justify-content-between">
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="image_0.png" alt="Logo Putih" style="height: 40px; filter: brightness(0) invert(1);" class="me-3">
+                            <h5 class="mb-0" style="color: var(--secondary-color);">PT. PATRAMA GLOBAL NUSANTARA</h5>
+                        </div>
+                        <p class="text-white-50">Mitra solusi industri terpercaya yang mengutamakan keahlian, kecepatan, dan kepuasan klien. Siap mendukung operasional pabrik Anda 24/7.</p>
+                        <div class="mt-4">
+                            <a href="#" class="text-white-50 me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+                            <a href="#" class="text-white-50 me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                            <a href="#" class="text-white-50"><i class="fab fa-instagram fa-lg"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mb-4 mb-lg-0">
+                        <h5 style="color: var(--secondary-color);">Layanan Cepat</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="index.html#services">Perbaikan Inverter & PCB</a></li>
+                            <li><a href="index.html#services">Spesialis Mesin Tekstil</a></li>
+                            <li><a href="index.html#services">Kontrak Maintenance</a></li>
+                            <li><a href="shop.html">Katalog Suku Cadang</a></li>
+                            <li><a href="index.html#tracking">Cek Status Servis</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5 style="color: var(--secondary-color);">Hubungi Kami</h5>
+                        <ul class="list-unstyled text-white-50">
+                            <li class="d-flex mb-3">
+                                <i class="fas fa-map-marker-alt mt-1 me-3" style="color: var(--secondary-color);"></i>
+                                <span>[Jl. Kopo Bihbul Pak Basar]<br>Bandung, Jawa Barat.</span>
+                            </li>
+                            <li class="d-flex mb-3">
+                                <i class="fas fa-phone-alt mt-1 me-3" style="color: var(--secondary-color);"></i>
+                                <span>+62 8515-8117-431 (Office)<br>+62 895-333-802-106 (WhatsApp 24 Jam)</span>
+                            </li>
+                            <li class="d-flex">
+                                <i class="fas fa-envelope mt-1 me-3" style="color: var(--secondary-color);"></i>
+                                <span>info@patramaglobal.co.id</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="mt-5 mb-4" style="border-color: rgba(255,255,255,0.1);">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="small text-white-50 mb-0">&copy; 2026 PT. Patrama Global Nusantara. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="small text-white-50 mb-0">Privacy Policy | Terms & Conditions</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <div class="chat-toggle-btn" onclick="toggleChat()">
+        <i class="fas fa-headset"></i>
+    </div>
+
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-robot me-2"></i> Patrama Virtual Assistant
+            </div>
+            <button type="button" class="btn-close btn-close-white" onclick="toggleChat()"></button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message bot-msg">
+                <div class="d-flex align-items-center mb-2">
+                    <img src="image_0.png" height="20" class="me-2" alt="Bot Icon">
+                    <strong>Patrama Bot</strong>
+                </div>
+                Halo! Selamat datang di PT. Patrama Global Nusantara.
+                <br><br>
+                Ada yang bisa saya bantu hari ini? Silakan pilih topik di bawah ini atau ketik pertanyaan Anda.
+            </div>
+            <div class="d-flex flex-wrap gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="sendQuickReply('Info Layanan')">Info Layanan</button>
+                <button class="btn btn-sm btn-outline-secondary rounded-pill" onclick="sendQuickReply('Cari Sparepart')">Cari Sparepart</button>
+                <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="sendQuickReply('Alamat Workshop')">Alamat Workshop</button>
+                <button class="btn btn-sm btn-outline-secondary rounded-pill" onclick="sendQuickReply('Hubungi Admin')">Hubungi Admin</button>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <div class="input-group">
+                <input type="text" id="chatInput" class="form-control" placeholder="Ketik pesan...">
+                <button class="btn btn-primary" type="button" onclick="sendMessage()">Kirim</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat & WhatsApp Functions -->
+    <script>
+        function toggleChat() {
+            const widget = document.getElementById('chatWidget');
+            widget.style.display = widget.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function sendQuickReply(text) {
+            sendMessage(text);
+        }
+
+        function sendMessage(predefined = '') {
+            const input = document.getElementById('chatInput');
+            const msg = predefined || input.value.trim();
+            
+            if (!msg) return;
+
+            const chatBody = document.getElementById('chatBody');
+            const userMsg = document.createElement('div');
+            userMsg.classList.add('chat-message', 'user-msg');
+            userMsg.innerHTML = `<div>${msg}</div>`;
+            chatBody.appendChild(userMsg);
+
+            input.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            setTimeout(() => {
+                const botReply = document.createElement('div');
+                botReply.classList.add('chat-message', 'bot-msg');
+                botReply.innerHTML = `
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="image_0.png" height="20" class="me-2" alt="Bot Icon">
+                        <strong>Patrama Bot</strong>
+                    </div>
+                    Terima kasih atas pesan Anda. Tim kami akan segera merespons. Untuk bantuan cepat, hubungi WhatsApp kami di +62 895-333-802-106.
+                `;
+                chatBody.appendChild(botReply);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 500);
+        }
+
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Floating WhatsApp Button
+        const waBtn = document.querySelector('.whatsapp-float') || 
+            (function() {
+                const btn = document.createElement('a');
+                btn.href = 'https://wa.me/62895333802106';
+                btn.target = '_blank';
+                btn.rel = 'noopener noreferrer';
+                btn.innerHTML = '<i class="fab fa-whatsapp"></i>';
+                btn.style.cssText = `
+                    position: fixed;
+                    bottom: 90px;
+                    right: 20px;
+                    width: 60px;
+                    height: 60px;
+                    background-color: #25d366;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 28px;
+                    color: white;
+                    text-decoration: none;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                    z-index: 999;
+                    transition: 0.3s;
+                `;
+                btn.onmouseover = () => btn.style.transform = 'scale(1.1)';
+                btn.onmouseout = () => btn.style.transform = 'scale(1)';
+                document.body.appendChild(btn);
+                return btn;
+            })();
+    </script>
+</body>
+</html>

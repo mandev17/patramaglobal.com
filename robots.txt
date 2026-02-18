@@ -1,0 +1,28 @@
+# robots.txt - Panduan untuk Search Engine Crawlers
+
+# Perbolehkan semua crawler (Google, Bing, etc)
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /*.pdf
+Disallow: /assets/
+
+# Specific rules untuk Google Bot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Specific rules untuk Bing Bot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Disallow bad bots
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: MJ12bot
+User-agent: DotBot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://patramaglobal.co.id/sitemap.xml
